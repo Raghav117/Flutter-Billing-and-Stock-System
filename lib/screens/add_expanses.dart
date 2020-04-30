@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:autocomplete_textfield/autocomplete_textfield.dart';
+import 'package:stock/database/data.dart';
 
 class AddExpanses extends StatefulWidget {
   @override
@@ -6,8 +8,13 @@ class AddExpanses extends StatefulWidget {
 }
 
 class _AddExpansesState extends State<AddExpanses> {
+  
   List s;
   GlobalKey <ScaffoldState> _globalKey;
+  GlobalKey<AutoCompleteTextFieldState<String>> key = new GlobalKey();
+
+  SimpleAutoCompleteTextField textField;
+
   @override
   void initState() {
     _globalKey = new GlobalKey();
@@ -33,12 +40,20 @@ class _AddExpansesState extends State<AddExpanses> {
             children: <Widget>[
               Container(
                 width: double.infinity,
-                child: TextField(
-                  onChanged: (value){
-                    s[0]=value;
-                  },
+                child: textField = SimpleAutoCompleteTextField(
+                  key: key,
                   decoration: InputDecoration(hintText: "Narration"),
+                  suggestions: ingredients,
+                  textChanged: (value)=>s[0]=value,
+                  textSubmitted: (value)=> s[0]=value,
+                  clearOnSubmit: false,
                 ),
+                // child: TextField(
+                //   onChanged: (value){
+                //     s[0]=value;
+                //   },
+                //   decoration: InputDecoration(hintText: "Narration"),
+                // ),
               ),
               SizedBox(
                 height: 100,

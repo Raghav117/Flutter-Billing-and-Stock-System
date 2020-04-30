@@ -1,6 +1,9 @@
+import 'dart:convert';
 
-
+import 'package:autocomplete_textfield/autocomplete_textfield.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:stock/database/data.dart';
 import 'package:stock/screens/confirm_production.dart';
 import 'package:stock/screens/confirm_sale.dart';
 import 'package:stock/screens/day_book.dart';
@@ -24,11 +27,11 @@ void main() => runApp(
       '/production': (context) => Production(),
       '/confirmProduction': (context) => ConfirmProduction(),
       '/sale': (context) => Sale(),
-      '/confirmSale': (context) => ConfirmSales(),
+      '/confirmSale': (context) => ConfirmSale(),
       '/dayBook': (context) => DayBook()
 
     },
-    // home: MyApp(),
+    
   )
 );
 
@@ -38,6 +41,71 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  
+final RegExp regExp = new RegExp(
+  r"\{(.*?)\}\}",
+);
+
+final RegExp regExp1 = new RegExp(
+  r'\"(.*?)"',
+);
+
+
+
+  fetchIngredients()async{
+    var r = await http.get("https://us-central1-stock-274010.cloudfunctions.net/app/api/read");
+    var sr = regExp1.allMatches(r.body);
+
+    List <String> match = new List();
+    for(var mat in sr){
+      match.add(mat.group(0).substring(1,mat.group(0).length-1));
+    }
+
+    return match;
+  }
+  fetchDishes()async{
+    var r = await http.get("https://us-central1-stock-274010.cloudfunctions.net/app/api/read/dishes");
+    // List a = new List();
+    var a=regExp.allMatches(r.body);
+
+  List match = new List();
+    for(var mat in a){
+      match.add(mat.group(0));
+    }
+
+  List d = new List();
+  for(var i in match){
+    d.add(json.decode(i));
+  }
+  return d;
+  }
+
+  AutoCompleteTextField searchTextField;
+  GlobalKey<AutoCompleteTextFieldState> key = new GlobalKey();
+  @override
+  void initState() {
+    super.initState();
+    fetch();
+  }
+
+  fetch() async{
+
+    List<String> str = await fetchIngredients();
+    if(ingredients==null){
+      ingredients = str;
+    }else{
+      ingredients.clear();
+      ingredients = str;
+    }
+    print(ingredients);
+    List d = await fetchDishes();
+    if(dishes!=null){
+      dishes.clear();
+    }
+    dishes = d;
+    print(dishes);
+  }
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -111,9 +179,9 @@ class _MyAppState extends State<MyApp> {
             //   title: Text("Buy"),
             // ),
             // ListTile(
-            //   onTap: (){},
-            //   title: Text("Stocks"),
-            // ),
+            
+            
+            
           ],
         ),
       ),
@@ -166,6 +234,8 @@ class _MyAppState extends State<MyApp> {
               SizedBox(
                 height: 20,
               ),
+
+            
           ],
 
         ),
