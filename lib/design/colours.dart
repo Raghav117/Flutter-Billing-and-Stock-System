@@ -8,7 +8,17 @@ TextStyle textStyle = TextStyle(
   fontSize: 15
 );
 TextStyle textStyle2 = TextStyle(
-  color: Colors.black,
+  color: color,
+  fontWeight: FontWeight.bold,
+  fontSize: 15
+);
+TextStyle textStyle5 = TextStyle(
+  color: Colors.green,
+  fontWeight: FontWeight.bold,
+  fontSize: 15
+);
+TextStyle textStyle4 = TextStyle(
+  color: Colors.red,
   fontWeight: FontWeight.bold,
   fontSize: 15
 );

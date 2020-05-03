@@ -25,6 +25,7 @@ class _ConfirmPurchaseState extends State<ConfirmPurchase> {
     s.add("");
     s.add("");
     s.add("1");
+    s.add("0");
     super.initState();
   } 
   @override
@@ -71,11 +72,13 @@ class _ConfirmPurchaseState extends State<ConfirmPurchase> {
             height: 30,
           ),
           Container(
-            
-            child: Row(
+            width: double.infinity,
+            height: 60,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
               children: [
                 Container(
-                  width: MediaQuery.of(context).size.width/2,
+                  width: MediaQuery.of(context).size.width/3,
                   height: 50,
                   child: TextField(
                     onChanged: (value){
@@ -88,20 +91,42 @@ class _ConfirmPurchaseState extends State<ConfirmPurchase> {
                 SizedBox(
                   width: 30,
                 ),
-                DropdownButton(
-                  items: [
-                  DropdownMenuItem(
-                    child: Text("Kg"),
-                    value: 1,),
-                  DropdownMenuItem(
-                    child: Text("Gm"),
-                    value: 0,),
-                  ],
-                  onChanged: (value){
-                    s[3]=value.toString();
-                    setState(() {});
-                  },
-                  value: int.parse(s[3]),
+                Container(
+                  child: DropdownButton(
+                    items: [
+                    DropdownMenuItem(
+                      child: Text("Kg"),
+                      value: 1,),
+                    DropdownMenuItem(
+                      child: Text("Gm"),
+                      value: 0,),
+                    ],
+                    onChanged: (value){
+                      s[3]=value.toString();
+                      setState(() {});
+                    },
+                    value: int.parse(s[3]),
+                  ),
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                Container(
+                  child: DropdownButton(
+                    items: [
+                    DropdownMenuItem(
+                      child: Text("Credit"),
+                      value: 1,),
+                    DropdownMenuItem(
+                      child: Text("Debit"),
+                      value: 0,),
+                    ],
+                    onChanged: (value){
+                      s[4]=value.toString();
+                      setState(() {});
+                    },
+                    value: int.parse(s[4]),
+                  ),
                 )
               ],
             ),

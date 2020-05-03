@@ -4,11 +4,16 @@ import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:stock/database/data.dart';
+import 'package:stock/design/colours.dart';
+import 'package:stock/screens/add_parties.dart';
 import 'package:stock/screens/confirm_production.dart';
 import 'package:stock/screens/confirm_sale.dart';
 import 'package:stock/screens/day_book.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stock/screens/expenses.dart';
+import 'package:stock/screens/list_parties.dart';
+import 'package:stock/screens/name_party.dart';
+import 'package:stock/screens/parties_drawer.dart';
 import 'package:stock/screens/production.dart';
 import 'package:stock/screens/purchase.dart';
 import 'package:stock/screens/purchase_confirm.dart';
@@ -22,13 +27,16 @@ void main() => runApp(
     routes: {
       '/' : (context) => MyApp(),
       '/purchase': (context) => Purchase(),
+      '/listParties': (context) => ListParties(),
       '/cofirmPurchase': (context) => ConfirmPurchase(),
       '/expenses': (context) => Expenses(),
       '/production': (context) => Production(),
       '/confirmProduction': (context) => ConfirmProduction(),
       '/sale': (context) => Sale(),
       '/confirmSale': (context) => ConfirmSale(),
-      '/dayBook': (context) => DayBook()
+      '/dayBook': (context) => DayBook(),
+      '/addParty': (context) => AddParty(),
+      '/partyDay': (context) => PartiesDay(),
 
     },
     
@@ -146,6 +154,16 @@ final RegExp regExp1 = new RegExp(
                 color: Color.fromRGBO(249,166,2,1),
               ),),
             ),
+            ListTile(
+              onTap: (){
+                Navigator.pushNamed(context, '/partyDay');
+              },
+              title: Text("Parties Day Book",
+              style: TextStyle(
+                color: color,
+              ),
+              ),
+            ),
             Divider(
               thickness: 3.0,
               height: 50,
@@ -228,6 +246,19 @@ final RegExp regExp1 = new RegExp(
               ),),
               onPressed: (){
                 Navigator.pushNamed(context, '/sale');
+
+              }
+              ),
+              SizedBox(
+                height: 20,
+              ),
+            RaisedButton(
+              color: Color.fromRGBO(249,166,2,1),
+              child: Text("Parties",style: TextStyle(
+                color: Colors.white
+              ),),
+              onPressed: (){
+                Navigator.pushNamed(context, '/listParties');
 
               }
               ),

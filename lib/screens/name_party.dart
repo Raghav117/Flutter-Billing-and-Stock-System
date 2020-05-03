@@ -1,22 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:stock/database/expensedb.dart';
+import 'package:stock/database/namepartydb.dart';
+import 'package:stock/design/colours.dart';
 import 'package:stock/screens/add_expanses.dart';
 
-class Expenses extends StatefulWidget {
+class PartyName extends StatefulWidget {
+  final String app;
+
+  const PartyName({Key key, this.app}) : super(key: key);
   @override
-  _ExpensesState createState() => _ExpensesState();
+  _PartyNameState createState() => _PartyNameState(app);
 }
 
-class _ExpensesState extends State<Expenses> {
+class _PartyNameState extends State<PartyName> {
+  final String app;
   List<String> narration;
   List<double> cost;
   List<int> color;
+
+  _PartyNameState(this.app);
 
   @override
   void initState() {
     narration = new List();
     cost = new List();
     color = new List();
+    // PartyDatabase().giveList(app.toLowerCase() + ".db");
     // ExpansesDb().deleteDatabase();
     super.initState();
   }
@@ -25,7 +34,7 @@ class _ExpensesState extends State<Expenses> {
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Expanses"),
+        title: Text(app),
         centerTitle: true,
         backgroundColor: Color.fromRGBO(249,166,2,1),
         elevation: 0.0
@@ -38,7 +47,7 @@ class _ExpensesState extends State<Expenses> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text("Narration",style: TextStyle(
+                  Text("Name",style: TextStyle(
                     fontWeight: FontWeight.bold
                   )),
                   Text("Cost",style: TextStyle(
@@ -81,7 +90,7 @@ class _ExpensesState extends State<Expenses> {
             RaisedButton(
               
               color: Color.fromRGBO(249,166,2,1),
-              child: Text("Submit"),
+              child: Text("Submit",style:textStyle3),
               onPressed: ()async{
                 // print();
                 List<Map<String,dynamic>> map = new List();
@@ -99,7 +108,7 @@ class _ExpensesState extends State<Expenses> {
 
                 for(var v in map){
                   try{
-                    await ExpansesDb().insertExpanses(v);
+                    await PartyDatabase().insertExpanses(v,app.toLowerCase() + ".db");
                   }catch(e){
                     print(e);
                   }
@@ -124,14 +133,16 @@ class _ExpensesState extends State<Expenses> {
               )
         ],
       ):Center(
-        child: Text("Press Add Button to add your Expanses")
+        child: Text("Press Add Button...")
       ),
       
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         backgroundColor: Color.fromRGBO(249,166,2,1),
         onPressed: ()async{
-          var response = await Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context)=>AddExpanses()));
+          var response = await Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context)=>AddExpanses(
+            n: true,
+          )));
           print(response);
           if(response!=null)
           setState(() {

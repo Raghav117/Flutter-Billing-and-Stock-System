@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:stock/database/purchasedb.dart';
 import 'package:stock/design/colours.dart';
 import 'package:stock/screens/purchase_confirm.dart';
 
@@ -8,7 +10,7 @@ class Purchase extends StatefulWidget {
 }
 
 class _PurchaseState extends State<Purchase> {
-  List i,q,p,u;
+  List i,q,p,u,c;
   double height,width;
 
   @override
@@ -17,6 +19,7 @@ class _PurchaseState extends State<Purchase> {
     q=new List();
     p=new List();
     u=new List();
+    c=new List();
     super.initState();
   }
   @override
@@ -55,15 +58,9 @@ class _PurchaseState extends State<Purchase> {
                 padding: const EdgeInsets.only(top: 12,bottom: 12),
                 child: Text("Price",style: textStyle,),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 12,bottom: 12),
-                child: Text("      ",style: textStyle,),
-              ),
                   ]
           ),
-                      Container(
-                        height: height/1.35,
-                        width: width,
+                      Expanded(
                         child: ListView.builder(itemBuilder: (_,index){
                           return Padding(
                             padding: EdgeInsets.all(5),
@@ -80,6 +77,7 @@ class _PurchaseState extends State<Purchase> {
                                     q.removeAt(index);
                                     p.removeAt(index);
                                     u.removeAt(index);
+                                    c.removeAt(index);
                                     setState(() {
                                     });
                                   },
@@ -100,10 +98,53 @@ class _PurchaseState extends State<Purchase> {
           Padding(
             padding: const EdgeInsets.only(left: 30.0),
             child: RaisedButton(
-              onPressed: (){},
+              onPressed: ()async{
+                // print();
+                List<Map<String,dynamic>> map = new List();
+                for(int index = 0;index!=i.length;++index){
+                Map<String,dynamic> m = new Map();
+                  
+                  m['name'] = i[index];
+                  m['quantity'] = double.parse(q[index]);
+                  m["price"] = double.parse(p[index]);
+                  m["unit"] = int.parse(u[index]);
+                m["date"] = DateTime.now().toString().split(" ")[0];
+                m["color"] = int.parse(c[index]);
+                                    
+
+                  map.add(m);
+                  // m.clear();
+                }
+
+                for(var v in map){
+                  try{
+                    await PurchaseDb().insertPurchase(v);
+                  }catch(e){
+                    print(e);
+                  }
+                }
+
+                return showDialog(
+                  context: context,
+                  builder: (_){
+                    return AlertDialog(
+                      content: Text("Submit Sucessfully"),
+                      actions: [
+                        FlatButton(onPressed: (){Navigator.of(context).pop();
+                Navigator.pop(context);
+                        }, child: Text("OK"))
+                      ],
+                    );
+                  }
+                );
+
+              },
               color: color,
               child: Text("Submit",style:textStyle3),),
           ),
+          SizedBox(
+            height: 10,
+          )
         ],
       ),
       
@@ -119,6 +160,7 @@ class _PurchaseState extends State<Purchase> {
             p.add(response[1]);
             q.add(response[2]);
             u.add(response[3]);
+            c.add(response[4]);
             setState(() {
               
             });

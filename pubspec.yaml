@@ -24,6 +24,8 @@ dependencies:
   google_fonts:
   autocomplete_textfield:
   sliding_up_panel:
+
+  path_provider:
   sqflite:
 
   # The following adds the Cupertino Icons font to your application.

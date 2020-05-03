@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stock/database/productiondb.dart';
 import 'package:stock/design/colours.dart';
 // import 'package:stock/screens/Production_confirm.dart';
 
@@ -55,9 +56,7 @@ class _ProductionState extends State<Production> {
               
                   ]
           ),
-                      Container(
-                        height: height/1.35,
-                        width: width,
+                      Expanded(
                         child: ListView.builder(itemBuilder: (_,index){
                           return Padding(
                             padding: EdgeInsets.all(5),
@@ -94,10 +93,53 @@ class _ProductionState extends State<Production> {
           Padding(
             padding: const EdgeInsets.only(left: 30.0),
             child: RaisedButton(
-              onPressed: (){},
               color: color,
-              child: Text("Submit",style:textStyle3),),
+              child: Text("Submit",style:textStyle3),
+              onPressed: ()async{
+                // print();
+                List<Map<String,dynamic>> map = new List();
+                for(int index = 0;index!=i.length;++index){
+                Map<String,dynamic> m = new Map();
+                  
+                  m['name'] = i[index];
+                  m['quantity'] = double.parse(q[index]);
+                m["date"] = DateTime.now().toString().split(" ")[0];
+                                    
+
+                  map.add(m);
+                  // m.clear();
+                }
+
+                for(var v in map){
+                  try{
+                    await ProductionDb().insertProduction(v);
+                  }catch(e){
+                    print(e);
+                  }
+                }
+                // await ProductionDb().giveList(DateTime.now().toString().split(" ")[0]);
+
+                return showDialog(
+                  context: context,
+                  builder: (_){
+                    return AlertDialog(
+                      content: Text("Submit Sucessfully"),
+                      actions: [
+                        FlatButton(onPressed: (){Navigator.of(context).pop();
+                Navigator.pop(context);
+                        }, child: Text("OK"))
+                      ],
+                    );
+                  }
+                );
+
+              },
+              
+              ),
           ),
+          SizedBox(
+            height: 10,
+          )
         ],
       ),
       

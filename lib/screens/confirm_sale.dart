@@ -119,7 +119,7 @@ class _ConfirmSaleState extends State<ConfirmSale> {
             if(s[0].length==0 || s[1].length==0){
               _globalKey.currentState.showSnackBar(SnackBar(content: Text("Value Should Not Be Empty"),));
             }else if(!suggestions.contains(s[0])){
-              _globalKey.currentState.showSnackBar(SnackBar(content: Text("Ingredient is not present"),));
+              _globalKey.currentState.showSnackBar(SnackBar(content: Text("Dish is not present"),));
             }
             else{
               Navigator.pop(context,s);
