@@ -47,7 +47,7 @@ class _PartyNameState extends State<PartyName> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text("Name",style: TextStyle(
+                  Text("Description",style: TextStyle(
                     fontWeight: FontWeight.bold
                   )),
                   Text("Cost",style: TextStyle(
@@ -68,7 +68,7 @@ class _PartyNameState extends State<PartyName> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(narration[index]),
-                        Text("${cost[index]}"),
+                        Text("${cost[index]}",style: drawer,),
                         IconButton(
                           icon: Icon(Icons.delete,), 
                           onPressed: (){

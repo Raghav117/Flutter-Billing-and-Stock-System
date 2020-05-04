@@ -23,7 +23,7 @@ class _AddExpansesState extends State<AddExpanses> {
     s=new List();
     s.add("");
     s.add("");
-    s.add("0");
+    s.add("2");
     super.initState();
   } 
   @override
@@ -31,7 +31,7 @@ class _AddExpansesState extends State<AddExpanses> {
     return Scaffold(
       key: _globalKey,
       appBar: AppBar(
-          title: Text(widget.n==false?"Expanses":"Add"),
+          title: Text(widget.n==false?"Expanses":"Payment"),
           centerTitle: true,
           backgroundColor: Color.fromRGBO(249, 166, 2, 1),
           elevation: 0.0),
@@ -46,7 +46,7 @@ class _AddExpansesState extends State<AddExpanses> {
                   width: double.infinity,
                   child: textField = SimpleAutoCompleteTextField(
                     key: key,
-                    decoration: InputDecoration(hintText: widget.n==false?"Narration":"Name"),
+                    decoration: InputDecoration(hintText: widget.n==false?"Narration":"Description"),
                     suggestions: ingredients,
                     textChanged: (value)=>s[0]=value,
                     textSubmitted: (value)=> s[0]=value,
@@ -68,36 +68,36 @@ class _AddExpansesState extends State<AddExpanses> {
                     onChanged: (value){
                       s[1]=value;
                     },
-                    decoration: InputDecoration(hintText: "Cost"),
+                    decoration: InputDecoration(hintText: "Money"),
                     keyboardType: TextInputType.number,
                   ),
                 ),
-                SizedBox(
-                  height: 30,
-                ),
-                Container(
-                    child: DropdownButton(
-                      items: [
-                      DropdownMenuItem(
-                        child: Text("Credit"),
-                        value: 1,),
-                      DropdownMenuItem(
-                        child: Text("Debit"),
-                        value: 0,),
-                      ],
-                      onChanged: (value){
-                        s[2]=value.toString();
-                        setState(() {});
-                      },
-                      value: int.parse(s[2]),
-                    ),
-                  ),
+                // SizedBox(
+                //   height: 30,
+                // ),
+                // Container(
+                //     child: DropdownButton(
+                //       items: [
+                //       DropdownMenuItem(
+                //         child: Text("Credit"),
+                //         value: 1,),
+                //       DropdownMenuItem(
+                //         child: Text("Debit"),
+                //         value: 0,),
+                //       ],
+                //       onChanged: (value){
+                //         s[2]=value.toString();
+                //         setState(() {});
+                //       },
+                //       value: int.parse(s[2]),
+                //     ),
+                //   ),
                 SizedBox(
                   height: 100,
                 ),
               FloatingActionButton(
                 onPressed: (){
-                  if(s[0].length==0 || s[1].length==0){
+                  if(s[1].length==0){
                     _globalKey.currentState.showSnackBar(SnackBar(content: Text("Value Should Not Be Empty"),));
                   }
                   else{

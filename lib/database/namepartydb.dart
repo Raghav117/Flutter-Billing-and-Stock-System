@@ -50,8 +50,8 @@ class PartyDatabase {
   }
   Future giveCount(String name,String date1,date2) async{
     Database db = await getdatabase(name);
-    var response = await db.rawQuery("SELECT SUM(quantity) FROM Expanses WHERE date BETWEEN ? AND ? AND color = ?",[date1,date2,0]);
-    var response2 = await db.rawQuery("SELECT SUM(quantity) FROM Expanses WHERE date BETWEEN ? AND ? AND color = ?",[date1,date2,1]);
+    var response = await db.rawQuery("SELECT SUM(quantity) FROM Expanses WHERE date BETWEEN ? AND ? AND color = ?",[date1,date2,1]);
+    var response2 = await db.rawQuery("SELECT SUM(quantity) FROM Expanses WHERE date BETWEEN ? AND ? AND color = ?",[date1,date2,2]);
     double x = response[0]["SUM(quantity)"]==null?0:response[0]["SUM(quantity)"];
     double y = response2[0]["SUM(quantity)"]==null?0:response2[0]["SUM(quantity)"];
     print(x.toString()+"  "+y.toString());

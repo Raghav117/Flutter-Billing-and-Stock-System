@@ -124,7 +124,8 @@ Future<DateTime> getDate(date) {
             child: ListView.builder(
                             itemCount: map==null?0:map.length,
                             itemBuilder: (BuildContext context,int index){
-                  TextStyle styl = map[index]["color"]==0?textStyle5:textStyle4;
+                  TextStyle styl = map[index]["color"]==0?textStyle5
+                    :map[index]["color"]==1?textStyle4:drawer;
                   amount =amount +  (styl == textStyle2?1*map[index]["quantity"]:-1*map[index]["quantity"]);
                   
                               return Padding(
@@ -133,7 +134,7 @@ Future<DateTime> getDate(date) {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
-                                      Text(map[index]["name"],style: styl,),
+                                      Text(styl == drawer?"Payment":map[index]["name"],style: styl,),
                                       Text(map[index]["quantity"].toString(),style: styl,),
                                     ],
                                   ),

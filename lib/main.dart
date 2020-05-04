@@ -169,17 +169,27 @@ final RegExp regExp1 = new RegExp(
               height: 50,
             ),
             ListTile(
-              onTap: (){},
-              title: Text("Waste Dishes",style: TextStyle(
-                color: Color.fromRGBO(249,166,2,1),
-              ),),
+              onTap: (){
+                Navigator.pushNamed(context, '/listParties');
+              },
+              title: Text("Payment",style: drawer),
             ),
-            ListTile(
-              onTap: (){},
-              title: Text("Waste Ingredients",style: TextStyle(
-                color: Color.fromRGBO(249,166,2,1),
-              ),),
-            ),
+            // Divider(
+            //   thickness: 3.0,
+            //   height: 50,
+            // ),
+            // ListTile(
+            //   onTap: (){},
+            //   title: Text("Waste Dishes",style: TextStyle(
+            //     color: Color.fromRGBO(249,166,2,1),
+            //   ),),
+            // ),
+            // ListTile(
+            //   onTap: (){},
+            //   title: Text("Waste Ingredients",style: TextStyle(
+            //     color: Color.fromRGBO(249,166,2,1),
+            //   ),),
+            // ),
             Divider(
               thickness: 3.0,
               height: 50,
@@ -252,19 +262,19 @@ final RegExp regExp1 = new RegExp(
               SizedBox(
                 height: 20,
               ),
-            RaisedButton(
-              color: Color.fromRGBO(249,166,2,1),
-              child: Text("Parties",style: TextStyle(
-                color: Colors.white
-              ),),
-              onPressed: (){
-                Navigator.pushNamed(context, '/listParties');
+            // RaisedButton(
+            //   color: Color.fromRGBO(249,166,2,1),
+            //   child: Text("Parties",style: TextStyle(
+            //     color: Colors.white
+            //   ),),
+              // onPressed: (){
+              //   Navigator.pushNamed(context, '/listParties');
 
-              }
-              ),
-              SizedBox(
-                height: 20,
-              ),
+              // }
+            //   ),
+            //   SizedBox(
+            //     height: 20,
+            //   ),
 
             
           ],

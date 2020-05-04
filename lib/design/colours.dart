@@ -27,3 +27,8 @@ TextStyle textStyle3 = TextStyle(
   fontWeight: FontWeight.bold,
   fontSize: 15
 );
+TextStyle drawer = TextStyle(
+  color: Colors.blue,
+  fontWeight: FontWeight.bold,
+  // fontSize: 15
+);
